@@ -16,7 +16,7 @@ const Tomek = {
 const Asia = {
     name: "Asia",
     permissions: {
-        read_perm: read_perm
+        read_perm
     }
 }
 

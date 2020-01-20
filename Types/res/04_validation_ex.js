@@ -59,3 +59,4 @@ console.log(attComaprison(6.1, 10) === false);
 console.log(attComaprison(6, "10.1") === false);
 console.log(attComaprison("6.1", 10) === false);
 console.log(attComaprison("6.1", "10.1") === false);
+
