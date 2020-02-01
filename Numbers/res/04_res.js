@@ -23,8 +23,6 @@ function your_test_function(NUMBER) {
 
 console.log(your_test_function(2) == true)
 console.log(your_test_function(3.13) == true)
-console.log(your_test_function({}) == true)
-console.log(your_test_function([]) == true)
 console.log(your_test_function(0) == true)
-console.log(your_test_function(-0) == true)
-console.log(your_test_function(NaN) == true)
+console.log(your_test_function(-0) == false)
+console.log(your_test_function(NaN) == false)

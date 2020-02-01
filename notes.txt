@@ -1,0 +1,311 @@
+# SCOPE
+    - scope - where to look for things
+
+    x = 42;
+    console.log(y);
+
+    JS widzi zmienną i zastanawia się do jakiego zakresu należy. JS jest językiem bardziej kompilowanym językiem
+    niż interpretowanym.
+
+    3 (4) etapy procesu kompilatorów:
+    - lexing and tokanization (1 + 2)
+    - parsing - przemienia strumień tokenów w abstract syntax tree
+    - code generation - bierze abstract syntax tree i przemienia w formę wykonywawczą programu
+
+    Niektórzy twierdzą, że JS nie jest kompilowany bo nie kompilujemy kodu i potem gotowy.
+
+
+@ JavaScript  organizes scopes with functions and blocks
+
+    var test = "Test";
+
+    function firstFunction() {
+        var test = "Not Test";
+        console.log("Hey);
+    }
+
+    function second() {
+        var quest = "Ask?"
+        console.log(quest)
+    }
+
+    second();
+    firstFunction();
+
+Ulokowanie odpowiednich elementów w odpowiednim miejscu (dopasowanie do odpowiednich zakresów) odbywa się
+w trakcie "kompilacji" nie jest to robione w tzw. runtime. Ma to na celu optymalizację. NIe ma szans, by w
+trakcie wywoływania kodu jest było to robione.
+
+# Dlaczego lepiej stosować named function expression
+
+    var clickHandler = function() {
+        ..
+    }
+
+    var clickHandler = function clickHandelr() {
+        ..
+    }
+
+    1. Nazwa tworzy reliable function self-reference (recursion)
+        - jeśli funkcja jest event handlerem i chcemy pozbyć się tego handlera, odnosimy się wtedy do nazwy
+        - jeśli chcemy uzyskać dostęp do właściwości tej funkcji jak length, name etc.
+        - self-reference do funkcji można uzyskać przez nazwę
+
+        - more debuggable stack trace - przy anonimowych funkcjach otrzymujemy stack z anonymous functions.
+
+        - more self-documenting code
+
+        * jeśli funkcja ma więcej niż 3 linie kodu dobrze jest robić funciton declaration, 
+        jeśli to jedne, dwie linie to function expression
+
+# Arrow functions
+
+    var ids = people.map(person => person.id);
+
+    var ids = people.map(function getId(person) {
+        return person.id;
+    });
+
+    // promise chain
+
+    getPerson()
+        .then(person => getData(person.id))
+        .then(renderData);
+
+    vs
+
+    getPerson()
+        .then(function getDataFrom(person) {
+            return getData(person.id)
+        })
+        .then(renderData)
+
+
+# HOISTING
+
+    let, const, var "hoistują" ale w każdy w inny sposób.
+
+    Przykład:
+
+    {
+        car = "Mercedes";       // TDZ error!
+        let car;
+    }
+
+    var bike = "Romet";
+
+    {
+        console.log(bike);      // TDZ error!
+        let bike = "Kolos";
+    }
+
+    Gdyby let nie hoistowało w tym przypadku, to console.log szukałby zmiennej bike w bloku wyżej.
+
+    1. let, const hoistują tylko w zakresie bloku
+    2. var hoistuje aż do zakresu funkcji
+    3. var działa tak, że jak tworzymy zmienną, kiedy blok jest tworzony (zakres) to var ustawia
+       wartość zmiennej na undefined
+    4. gdy tworzymy zmienną przy pomocy let, nie jest ona inicjalizowana, nie jest undefined. Jest to
+       informacja, że jeszcze na tym etapie nie można wykorzystać zmiennej.
+
+       TDZ istnieje głównie z powodów const. W przypadku gdyby nie było TDZ const na początku przypisałby
+       wartość zmiennej do undefined. Jako że const nie można przypisać byłby to problem.
+
+
+# Closure
+
+    Clousure (domknięcie) ma miejsce, gdy funkcja zapamiętuje swój zasięg leksykalny (lex. scope) nawet
+    jeśli funkcja jest wywoływana  poza tym zasięgiem.
+
+        function ask(question) {
+            setTimeout(function waitASec() {
+                console.log(question);
+            }, 1000)
+        }
+
+        ask("What is closure?");
+
+W tym momencie wywołujemy funkcję ask, która uruchamia setTimeout wywołując funkcję waitASec po 1s. W momencie
+wywoływania waitASec, funkcji ask już nie ma, istnieje jednak nadal referencja do zmiennej question z zasięgu ask.
+
+
+# Modules
+
+    function WorkshopModule(teacher) {
+        var publicAPI = { ask, };
+        return publicAPI;
+
+        // ************
+
+        function ask(question) {
+            console.log(teacher, question)
+        }
+    };
+
+    var workshop = WorkshopModule("Tom");
+    
+    workshop.ask("It's a module, right?);
+
+
+# THIS
+
+    4 zasady na określenie czego dotyczy 'this':
+
+        1. Czy funkcja została wywołana przy pomocy słowa kluczowego new?
+        
+        Jeśli tak, to this wskazuje na obiekt z new
+
+        2. Czy funkcja została wywołana przy pomocy call() lub apply()?
+            * bind() wykorzystuje apply()
+
+        Jeśli tak, to this wskazuje na podpiędy target
+
+        3. Czy funkcja została wywołana przy pomocy tzw. context object.
+
+            var workshop = {
+                var teacher = "Kyle";
+
+                ask(q) {
+                    console.log(this.teacher,q)
+                }
+            }
+
+            workshop.ask("What's up?")
+
+
+        4. Jeśli żadna z tych zasad nie jest spełniona to this odnosi się defaultowo do
+        obiektu globalnego
+
+
+# Arrow functions & Lexical this
+
+    var workshop = {
+        teacher: "TOm",
+        ask(q) {
+            setTimeout(() => {
+                console.log(this.teacher, q)
+            }, 1000);
+        },
+    };
+
+    workshop.ask("Is this ok?");
+    // TOm Is this ok?
+
+    "Lexical this" - w tym przypadku this odnosi się do zasięgu obecnego, jeśli nie znajdzie w swoim to idzie to zasięgu wyżej,
+    tj. zasięgu funkcji ask. Ask zostało wywołane przez 'workshop.ask', kropka oznacza że ask należy/odwołuje się do obiektu workshop,
+    który ma właściwość teacher.
+
+    Jeśli obiekt nie miałby właściwości, to nie nastąpiłoby dalesze szukanie w zasięgu globalny. Zgłoszone by zostało 'undefined'.
+
+
+    var workshop = {
+        teacher: "TOm",
+        ask: (q) => {
+            console.log(this.teacher, q)
+        }
+    };
+
+    W tym przypadku jeśli ask nie znajdzie u siebie w zasięgu odniesienia do this.teacher idzie wyżej w zasięgu, następnym zasięgiem
+    nie jest obiekt. Obiekty nie tworzą zasięgu. Kolejnym zakresem jest zakres globalny.
+
+
+    Only use => arrow functions when u need lexical this.
+
+    https://github.com/getify/eslint-plugin-arrow-require-this
+
+# ES6 class keyword
+
+    class {}
+
+    class NameForClass {
+        constructor(post) {
+            this.post = post;
+        }
+
+        ask(question) {
+            console.log(this.post, question)
+        }
+    }
+
+    var newNameForClass = new NameForClass("Question");
+
+    ......
+
+    class SubNameForClass extends NameForClass {
+        writePost(content) {
+            this.content = content;
+        }
+
+        ask(msg) {
+            super.ask(msg.toUpperCase());
+        }
+    }
+
+    var js = new SubNameForClass("Test");
+    js.ask("daaaaad");
+    // Question daaaaad
+
+
+# Prototypes
+
+    Obiety są tworzone przez tzw. 'constructor calls' (via new)
+    A 'constructor call' makes an object its own Prototypes
+
+    A 'constructor call' makes an object linked to its own Prototypes
+
+    # The prototype chain
+
+        function Workshop(teacher) {
+            this.teacher = teacher;
+        }
+
+        Workshop.prototype.ask = function(question) {
+            console.log(this.teacher, question)
+        }
+
+        var deepJS = new Workshop("Kyle");
+        var reactJS = new Workshop("Suzy);
+
+        deepJS.ask("test")
+        reactJS.ask("test2")
+
+    ------- -------- ------- -------- ------- 
+                  ---- prototype ---->
+        (object)                        [ ]
+                  <--- constructor ---
+
+        Mamy obiekt, który posiada bazowe metody. Obiekt ma właściwość "prototype" która
+        wskazuje na ( [ ] ) inny obiekt. Mamy też inny element (konstruktor), ktory wskazuje na 
+        obiekt w drugą stroną.
+
+        1. function Workshop(teacher) {
+                this.teacher = teacher;
+            }
+
+                         ---- prototype ---->
+        (object Workshop)                     [ ]
+                         <--- constructor ---
+
+        Konstruktor wskazuje na obiekt od którego stworzony został inny obiekt
+
+        2. Workshop.prototype.ask = function(question) {
+            console.log(this.teacher, question)
+        }
+
+        Zostaje dodana funkcja do obiektu.
+
+                          ---- prototype ---->
+        (object Workshop)                      [ ask ]
+                          <--- constructor ---      . .
+                                                   .   .
+        3. var deepJS = new Workshop("Kyle");     .     .
+        var reactJS = new Workshop("Suzy);       .       .
+                                            [ deepJs ]  [ reactJS ]
+
+        W przypadku gdy mamy new keyword, tworzy się nowy obiekt.
+        Nowy obiekt zostaje połączony z naszym obiektem z funkcją ask.
+
+        Zostaje dodana właściwość teacher z lini numer 2.
+
+        W momencie tworzenia funkcji przez prototype this keyword wskazuje na 
+        obiekt w kontekscie ktorego została wywołana funkcja
