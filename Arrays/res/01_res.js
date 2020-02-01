@@ -1,72 +1,47 @@
 /*
     Zadanie:
 
-    Stwórz funkcję, która będzie przyjmowała tablicę jako argument i dokona sortowania
-    od najmniejszej do największej:
+    Wykorzystująć poznane metody z sekcji Array napisz 2 funkcję, które:
 
-        - wszystkie elementy tablicy powinny być zamienione na liczbę
-        - jeśli tablica jest pusta zwrób error
+    - pierwsza przyjmie tablicę jako argument i zwróci wynik w postaci:
+        "
+            1: 1
+            2: "dwa"
+            3: ttt
+        "
 
+        *Hint: string template
+
+    - druga przyjmie argumenty w postaci rozproszonej, tj. (a, b, c), umieści
+    je w tablicy i następnie zwróci tablicę.
+
+        fn(a,b,c) => // [a, b, c]
 
 */
 
-function sortDecr(arrValue) {
-    const len = arrValue.length;
+function returnSpecificString(arr) {
+    return `
+    1: ${arr[0]}
+    2: ${arr[1]}
+    3: ${arr[2]}
+`;
+}
 
-    if (len) {
-        const arr = arrValue.map((el) => Number(el));
-
-        for (let i = 1; i < len; i += 1) {
-            const current = arr[i];
-            let prev = i - 1;
-
-            while (arr[prev] > current) {
-                arr[prev + 1] = arr[prev];
-                prev -= 1;
-            }
-            arr[prev + 1] = current;
-        }
-        return arr;
-    }
-
-    throw new EvalError("Pusta tablica");
+function returnAsArray(a, b, c) {
+    return [a, b, c];
 }
 
 
-function sortDecr2(arrValue) {
-    const len = arrValue.length;
+// TESTS:
+const testOne = returnSpecificString([1, "dwa", "ttt"]);
+console.log(testOne);
 
-    if (len) {
-        let sorted;
-        const arr = arrValue.map((el) => Number(el));
-        do {
-            sorted = false;
-            for (let i = 0; i < arr.length; i += 1) {
-                if (arr[i] > arr[i + 1]) {
-                    const lowerValue = arr[i + 1];
-                    arr[i + 1] = arr[i];
-                    arr[i] = lowerValue;
-                    sorted = true;
-                }
-            }
-        } while (sorted);
-
-        return arr;
-    }
-
-    throw new EvalError("Pusta tablica");
+function isEqual(arr1, arr2) {
+    return !arr2.map((el, index) => el == arr1[index]).includes(false);
 }
 
-const arrCheck1 = [1, 2, 0.5, 222, -3, -1000];
-const arrCheck2 = ["-555", "9", -992, 3, 112];
-const arrCheck3 = [1.2, -Infinity, 2, 2, -123, 33, -123];
-const arrCheck4 = ["", "2", 2, 3, [55]];
+const check = isEqual(returnAsArray(1, "dwa", "ttt"), [1, "dwa", "ttt"])
+    ? "test zaliczny"
+    : new EvalError("test nie został zaliczony");
 
-function compare(arr1, arr2) {
-    return !arr1.map((el, i) => el === arr2[i]).includes(false);
-}
-
-console.log(compare(sortDecr(arrCheck1), arrCheck1.sort((a, b) => a - b)));
-console.log(compare(sortDecr(arrCheck2), arrCheck2.sort((a, b) => a - b)));
-console.log(compare(sortDecr(arrCheck3), arrCheck3.sort((a, b) => a - b)));
-console.log(compare(sortDecr(arrCheck4), arrCheck4.sort((a, b) => a - b)));
+console.log(check);
