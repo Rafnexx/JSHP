@@ -25,8 +25,6 @@ function yourTestFunction(NUMBER) {
 
 console.log(yourTestFunction(2) == true);
 console.log(yourTestFunction(3.13) == true);
-console.log(yourTestFunction({}) == false);
-console.log(yourTestFunction([]) == false);
 console.log(yourTestFunction(0) == true);
 console.log(yourTestFunction(-0) == false);
 console.log(yourTestFunction(NaN) == false);
