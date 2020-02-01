@@ -1,48 +1,40 @@
-// Napisz funkcję, która będzie sprawdzała uprawnienia użytkowników
-
-"use strict";
-
-const read_perm = 4;
-const write_perm = 2;
+const readPerm = 4;
+const writePerm = 2;
 
 const Tomek = {
     name: "Tomek",
     permissions: {
-        read_perm,
-        write_perm
-    }
-}
+        readPerm,
+        writePerm,
+    },
+};
 
 const Asia = {
     name: "Asia",
     permissions: {
-        read_perm
-    }
-}
+        readPerm,
+    },
+};
 
 const John = {
     name: "John",
-    permissions: {}
-}
+    permissions: {},
+};
 
-function permission_check(obj, permission) {
-    // stworzenie elementu do którego będziemy porównywać
-    // stworzenie kodu dzięki któremu dostaniemy się do właściwości obj i będziemy mogli
-    // porównać przy pomocy bitwise operator uprawnienia obiektu i nasze bazowe
-    // zwracanie true lub false
-}
+const permissionCheck = (obj, permission) => {
+    const myPerm = readPerm | writePerm;
+    let permissionValue = permission;
 
+    if (permission === readPerm) permissionValue = "readPerm";
+    else if (permission === writePerm) permissionValue = "writePerm";
+    else return "Nope";
 
-console.log(permission_check(Tomek, read_perm) == true)
-console.log(permission_check(Tomek, write_perm) == true)
-console.log(permission_check(Asia, read_perm) == true)
-console.log(permission_check(Asia, write_perm) == false)
-console.log(permission_check(John, read_perm) == false)
-console.log(permission_check(John, write_perm) == false)
+    return obj.permissions[permissionValue] & myPerm ? true : false;
+};
 
-
-
-
-
-
-
+console.log(permissionCheck(Tomek, readPerm) === true);
+console.log(permissionCheck(Tomek, writePerm) === true);
+console.log(permissionCheck(Asia, readPerm) === true);
+console.log(permissionCheck(Asia, writePerm) === false);
+console.log(permissionCheck(John, readPerm) === false);
+console.log(permissionCheck(John, writePerm) === false);

@@ -6,15 +6,15 @@
 */
 
 
-function your_test_function(NUMBER) {
+function yourTestFunction(NUMBER) {
     //  code here, shoud return boolean value: true or false
 }
 
 
-console.log(your_test_function(2) == true)
-console.log(your_test_function(3.13) == true)
-console.log(your_test_function({}) == true)
-console.log(your_test_function([]) == true)
-console.log(your_test_function(0) == true)
-console.log(your_test_function(-0) == true)
-console.log(your_test_function(NaN) == true)
+console.log(yourTestFunction(2) == true);
+console.log(yourTestFunction(3.13) == true);
+console.log(yourTestFunction({}) == false);
+console.log(yourTestFunction([]) == false);
+console.log(yourTestFunction(0) == true);
+console.log(yourTestFunction(-0) == false);
+console.log(yourTestFunction(NaN) == false);

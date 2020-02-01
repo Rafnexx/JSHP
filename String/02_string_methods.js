@@ -1,10 +1,8 @@
-"use strict";
-
 // 1. Sprawdź, czy mail zawiera @, ale nie zaczyna się od @
 // 2. Przywitaj zgodnie z założeniami: .pl - Cześć, .com - Hey
 
 
-function test_mail(mail) {
+function testMail() {
     // code here
 }
 
@@ -12,7 +10,7 @@ function test_mail(mail) {
 // Hint: do wyrzucenia błędu można zastosować new EvalError("message error")
 
 
-console.log(test_mail("test@example.com") == "Hey")
-console.log(test_mail("test@example.pl") == "Cześć")
-console.log(test_mail("@example@.com"))
-console.log(test_mail("testexample.com").message == "@ missing or @ in a wrong position")
+console.log(testMail("test@example.com") === "Hey");
+console.log(testMail("test@example.pl") === "Cześć");
+console.log(testMail("@example@.com"));
+console.log(testMail("testexample.com").message === "@ missing or @ in a wrong position");

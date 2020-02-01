@@ -1,44 +1,43 @@
-"use strict";
-const read_perm = 4;
-const write_perm = 2;
+const readPerm = 4;
+const writePerm = 2;
 
 const Tomek = {
     name: "Tomek",
     permissions: {
-        read_perm,
-        write_perm
-    }
-}
+        readPerm,
+        writePerm,
+    },
+};
 
 const Asia = {
     name: "Asia",
     permissions: {
-        read_perm
-    }
-}
+        readPerm,
+    },
+};
 
 const John = {
     name: "John",
-    permissions: {}
-}
+    permissions: {},
+};
 
-function permission_check(obj, permission) {
-    let my_perm = read_perm | write_perm;
-    let check;
+const permissionCheck = (obj, permission) => {
+    const myPerm = readPerm | writePerm;
+    let permissionValue = permission;
 
-    if (permission == read_perm) permission = "read_perm"
-    else if (permission == write_perm) permission = "write_perm"
-    else return "Nope"
+    if (permission === readPerm) permissionValue = "readPerm";
+    else if (permission === writePerm) permissionValue = "writePerm";
+    else return "Nope";
 
-    return (obj.permissions[permission] & my_perm) ? true : false
-}
+    return (obj.permissions[permissionValue] & myPerm) ? true : false;
+};
 
-console.log(permission_check(Tomek, read_perm) == true)
-console.log(permission_check(Tomek, write_perm) == true)
-console.log(permission_check(Asia, read_perm) == true)
-console.log(permission_check(Asia, write_perm) == false)
-console.log(permission_check(John, read_perm) == false)
-console.log(permission_check(John, write_perm) == false)
+console.log(permissionCheck(Tomek, readPerm) === true);
+console.log(permissionCheck(Tomek, writePerm) === true);
+console.log(permissionCheck(Asia, readPerm) === true);
+console.log(permissionCheck(Asia, writePerm) === false);
+console.log(permissionCheck(John, readPerm) === false);
+console.log(permissionCheck(John, writePerm) === false);
 
 // class Person {
 //     constructor(name, permissions = null) {
@@ -51,17 +50,17 @@ console.log(permission_check(John, write_perm) == false)
 //     }
 // }
 
-// const read_perm = 4;
-// const write_perm = 2;
-// const Tomek = new Person("Tomek", { read_perm, write_perm })
+// const readPerm = 4;
+// const writePerm = 2;
+// const Tomek = new Person("Tomek", { readPerm, writePerm })
 
 // const permission_check = permission_value => {
 //     let my_permissions = 0;
-//     my_permissions = my_permissions | read_perm | write_perm;
+//     my_permissions = my_permissions | readPerm | writePerm;
 //     let checking;
 
-//     if (permission_value == read_perm) checking = "read_perm"
-//     else if (permission_value == write_perm) checking = "write_perm"
+//     if (permission_value == readPerm) checking = "readPerm"
+//     else if (permission_value == writePerm) checking = "writePerm"
 //     else return "Invalid permission check"
 
 //     return (obj) => {
@@ -71,11 +70,3 @@ console.log(permission_check(John, write_perm) == false)
 //         console.log(message);
 //     }
 // }
-
-
-
-
-
-
-
-

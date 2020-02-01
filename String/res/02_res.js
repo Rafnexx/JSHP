@@ -1,6 +1,10 @@
-function test_mail(mail) {
-    let greet = mail.endsWith("com") ? "Hey" : "Cześć";
-    let mail_validation = mail.includes("@") && !mail.startsWith("@") ? true : false;
+function testMail(mail) {
+    const greet = mail.endsWith("com") ? "Hey" : "Cześć";
+    const mailValidation = mail.includes("@") && !mail.startsWith("@");
 
-    return mail_validation ? greet : new EvalError("@ missing or @ in a wrong position");
+    return mailValidation ? greet : new EvalError("@ missing or @ in a wrong position");
 }
+
+const testValue = "asd@gmail.com";
+
+testMail(testValue);

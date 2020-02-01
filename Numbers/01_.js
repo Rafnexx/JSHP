@@ -15,7 +15,7 @@ function deconstruct(number) {
     if (Number.isFinite(number) && number !== 0) {
         // Możemy uzyskać wykładnik przez podzielenie liczby przez 2 (podstawa),
         // a nie będzie miało zera z przodu (do postaci 0.04375 na przykład)
-        //dododajemy liczbę podziałów do -1128, która jest wykładnikiem najmniejszej liczby
+        // dododajemy liczbę podziałów do -1128, która jest wykładnikiem najmniejszej liczby
         // minus liczba bitów w znaczeniu i minus bit bonusowy
         exponent = -1128;
         let reduction = coefficient;
@@ -39,8 +39,8 @@ function deconstruct(number) {
         sign,
         coefficient,
         exponent,
-        number
-    }
+        number,
+    };
 }
 
 const check1 = deconstruct(16.7);
@@ -57,13 +57,11 @@ console.log(check4);
 console.log(check5);
 console.log(check6);
 
-const validate = obj => {
-    return obj.sign * obj.coefficient * (2 ** obj.exponent);
-}
+const validate = (obj) => obj.sign * obj.coefficient * (2 ** obj.exponent);
 
-console.log(16.7 == validate(check1));
-console.log(1 == validate(check2));
-console.log(0.1 == validate(check3));
-console.log(5 == validate(check4));
-console.log(0.3 == validate(check5));
-console.log(0.54 == validate(check6));
+console.log(validate(check1) == 16.7);
+console.log(validate(check2) == 1);
+console.log(validate(check3) == 0.1);
+console.log(validate(check4) == 5);
+console.log(validate(check5) == 0.3);
+console.log(validate(check6) == 0.54);
