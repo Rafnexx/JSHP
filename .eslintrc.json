@@ -33,6 +33,10 @@
         "eqeqeq":"off",
         "no-self-compare":"off",
         "no-shadow": "off",
-        "no-unused-vars":"off"
+        "no-unused-vars":"off",
+        "no-var":"off",
+        "object-curly-newline": "off",
+        "prefer-arrow-callback": "off",
+        "array-callback-return": "off"
     }
 }

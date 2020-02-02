@@ -19,14 +19,15 @@
 
 */
 
-function returnSpecificString(arr) {
-    // code
-}
+const returnSpecificString = (arr) => (
+    `
+    1: ${arr[0]}
+    2: ${arr[1]}
+    3: ${arr[2]}
+`
+);
 
-
-function returnAsArray(a, b, c) {
-    // code
-}
+const returnAsArray = (...args) => args;
 
 // TESTS:
 console.log(returnSpecificString([1, "dwa", "ttt"]));

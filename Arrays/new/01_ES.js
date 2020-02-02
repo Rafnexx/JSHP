@@ -19,14 +19,13 @@
 
 */
 
-function returnSpecificString(arr) {
+const returnSpecificString = (arr) => {
     // code
-}
+};
 
-
-function returnAsArray(a, b, c) {
+const returnAsArray = (...args) => {
     // code
-}
+};
 
 // TESTS:
 console.log(returnSpecificString([1, "dwa", "ttt"]));
