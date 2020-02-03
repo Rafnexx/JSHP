@@ -20,10 +20,11 @@ console.log(test_less_then([2, 1]) === false)
 // 1 < 3 daje nam true
 console.log(test_less_then2([1, 2, 3]) === true)
 
-// 1 < 2 < 0
-// 1 < 2 daje nam true, true < 3 musi zostać zamienione na liczbę, więc true = 1
-// 1 < 0 daje nam false
-console.log(test_less_then2([3, 2, 1]) === false)
+// 3 < 2 < 1
+// 3 < 2 daje nam false, false < 3 musi zostać zamienione na liczbę
+// false < true daje nam true
+// 0 < 1
+console.log(test_less_then2([3, 2, 1]) === true)
 
 // 1 > 2 > 0
 // 1 > 2 daje nam false, false > 3 musi zostać zamienione na liczbę, więc false = 0
