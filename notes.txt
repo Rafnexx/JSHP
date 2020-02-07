@@ -4,7 +4,7 @@
     x = 42;
     console.log(y);
 
-    JS widzi zmienną i zastanawia się do jakiego zakresu należy. JS jest językiem bardziej kompilowanym językiem
+    JS widzi zmienną i zastanawia się do jakiego zakresu należy. JS jest językiem bardziej kompilowanym
     niż interpretowanym.
 
     3 (4) etapy procesu kompilatorów:
@@ -12,7 +12,7 @@
     - parsing - przemienia strumień tokenów w abstract syntax tree
     - code generation - bierze abstract syntax tree i przemienia w formę wykonywawczą programu
 
-    Niektórzy twierdzą, że JS nie jest kompilowany bo nie kompilujemy kodu i potem gotowy.
+    Niektórzy twierdzą, że JS nie jest kompilowany bo nie kompilujemy kodu - błąd.
 
 
 @ JavaScript  organizes scopes with functions and blocks
